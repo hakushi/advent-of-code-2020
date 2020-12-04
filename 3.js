@@ -1,31 +1,52 @@
 let { map } = require('./3-data');
-let xPosition = 0;
-let treeCounter = 0;
 
-console.log(map[0])
+const countCrashes = (currentMap, rightStep, downStep, print=false) => {
+    
+    let xPosition = 0;
+    let treeCounter = 0;
+    print && console.log(currentMap[0])
+    
+    currentMap.forEach((row, index) => {
+        const step3 = xPosition + rightStep >= row.length ?
+            (xPosition + rightStep)-row.length : xPosition + rightStep;
+        
+        let marker = '0';
 
-map.forEach((row, index) => {
-    const step3 = xPosition + 3 >= row.length ? (xPosition + 3)-row.length : xPosition + 3;
-    let marker = '0';
+        if(index >= currentMap.length-downStep) {
+            return;
+        }
+        if(index%downStep !== 0) {
+            print && console.log(currentMap[index], treeCounter);
+            return;
+        }
+        if(currentMap[index+downStep][step3] === '#') {
+            marker = 'X';
+            treeCounter++;
+        }
+        if(
+            index <= currentMap.length-1
+        ) {
+            const stringArray = currentMap[index+downStep].split('');
+            stringArray[step3] = marker;
+            currentMap[index+downStep] = stringArray.join('');
+            const newPosition = xPosition + rightStep;
+            xPosition = newPosition >= row.length ? newPosition-row.length : newPosition;
+        }
+        print && console.log(currentMap[index+downStep], treeCounter);
+        
+    })
+    
+    return treeCounter
+}
 
-    if(index >= map.length-1) {
-        return;
-    }
-
-    if(map[index+1][step3] === '#') {
-        marker = 'X';
-        treeCounter++;
-    }
-    if(
-        index <= map.length-1
-    ) {
-        const stringArray = map[index+1].split('');
-        stringArray[step3] = marker;
-        map[index+1] = stringArray.join('');
-        const newPosition = xPosition + 3;
-        xPosition = newPosition >= row.length ? newPosition-row.length : newPosition;
-    }
-    console.log(map[index+1], treeCounter);
-})
-
-console.log('Crashed trees: ', treeCounter)
+const ROUTES = [
+    {right: 1, down: 1},
+    {right: 3, down: 1},
+    {right: 5, down: 1},
+    {right: 7, down: 1},
+    {right: 1, down: 2},
+];
+let product = 1;
+ROUTES.forEach(route => product *= countCrashes([...map], route.right, route.down))
+countCrashes(map, 1, 2, true)
+console.log('Product: ', product)
