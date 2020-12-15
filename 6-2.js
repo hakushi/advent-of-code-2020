@@ -1,4 +1,3 @@
-const { forEach } = require('./6-data');
 const data = require('./6-data');
 
 const getYesCountFromGroup = group => {
