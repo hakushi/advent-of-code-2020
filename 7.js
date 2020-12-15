@@ -11,7 +11,7 @@ data.forEach(bag => {
             contansShinyGoldBag = true;
         }
       }
-    );''
+    );
     if(contansShinyGoldBag) {
         bagArray.push(`${bag.colorType} ${bag.mainColor}`)
     }
