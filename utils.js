@@ -23,3 +23,5 @@ exports.numericSort = (a,b) => {
 }
 
 exports.stringArrayToInt = arr => (arr.map(string => parseInt(string, 10)))
+
+exports.removeIndexFromArray = (array, index) => [...array.slice(0,index), ...array.slice(index+1,array.length)]
