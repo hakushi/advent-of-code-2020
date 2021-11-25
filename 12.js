@@ -6,7 +6,7 @@ F11`;
 
 const data = require('./12-data.js');
 
-const instructions =data.split('\n')
+const instructions = data.split('\n')
 
 const position = {
     N:0,
